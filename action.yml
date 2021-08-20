@@ -1,0 +1,35 @@
+name: 'Run Specflow Tests'
+description: 'Github action to run SpecFlow tests and create LivingDoc artifact'
+inputs:
+  test-assembly:
+    description: "Relative path of <MySpecflowProject>.dll (example: MySpecflowProject/bin/Debug/netcoreapp3.1/MySpecflowProject.dll)"
+    required: true
+  test-execution-json:
+    description: "Relative path of <MySpecflowProjectTestExecution(s)>.json (example: MySpecflowProject/bin/Debug/netcoreapp3.1/TestExecution.json)"
+    required: true
+  output-file:
+    description: "Name of Specflow LivingDoc output file (must end with .html)"
+    required: false
+    default: 'LivingDoc.html'
+  #no-build: TODO
+    #description: "Set to false to disable dotnet build and dotnet restore"
+    #required: false
+    #default: 'true'
+  #upload-artifact: TODO
+    #description: "Set to true to upload <LivingDoc>.html artifact automatically"
+    #required: false
+    #default: 'false'
+outputs:
+  output-file-html:
+    description: "Full path of {LivingDoc}.html"
+    value: ${{ steps.run-specflow-tests.outputs.output-file-html }}
+runs:
+  using: composite
+  steps:
+    - run: |
+        #if [ ${{ inputs.no-build }} == 'true' ]; then dotnet test --no-build; else dotnet test; fi
+        dotnet test
+        dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
+        livingdoc test-assembly ${{ inputs.test-assembly }} -t ${{ inputs.test-execution-json}} -o ${{ inputs.output-file }}
+        #if [ ${{ inputs.upload-artifact }} == 'true' ]; then UPLOAD; fi
+      shell: bash
