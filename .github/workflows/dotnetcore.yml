@@ -20,4 +20,4 @@ jobs:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
         test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
         output-html: MyTestResults.html
-        verbosity: minimal
+        verbosity: normal
