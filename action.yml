@@ -26,7 +26,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - id: "Run Specflow Tests"
+    - id: RunSpecflowTests
       run: |
         if [ ${{ inputs.no-build }} == 'true' ]; then dotnet test --no-build --verbosity ${{ inputs. verbosity }}; else dotnet test --verbosity ${{ inputs. verbosity }}; fi
         dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
