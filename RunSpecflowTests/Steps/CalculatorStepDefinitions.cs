@@ -6,7 +6,6 @@ namespace RunSpecflowSteps.Steps
     [Binding]
     public sealed class CalculatorStepDefinitions
     {
-
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
 
         private readonly ScenarioContext _scenarioContext;
@@ -36,9 +35,22 @@ namespace RunSpecflowSteps.Steps
             Assert.IsNotNull(firstNumber);
             Assert.IsNotNull(secondNumber);
 
-            int result = firstNumber + secondNumber;
-            _scenarioContext.Add("resultNumber", result);
+            int resultNumber = firstNumber + secondNumber;
+            _scenarioContext.Add("resultNumber", resultNumber);
         }
+
+        [When(@"the two numbers are subtracted")]
+        public void WhenTheTwoNumbersAreSubtracted()
+        {
+            int firstNumber = _scenarioContext.Get<int>("firstNumber");
+            int secondNumber = _scenarioContext.Get<int>("secondNumber");
+            Assert.IsNotNull(firstNumber);
+            Assert.IsNotNull(secondNumber);
+
+            int resultNumber = firstNumber - secondNumber;
+            _scenarioContext.Add("resultNumber", resultNumber);
+        }
+
 
         [Then("the result should be (.*)")]
         public void ThenTheResultShouldBe(int result)
