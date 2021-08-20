@@ -25,5 +25,5 @@ jobs:
       if: success() || failure()
       uses: actions/upload-artifact@v2
       with:
-        name: 'Specflow Test Results'
+        name: "Specflow Test Results"
         path: MyTestResults.html
