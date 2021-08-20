@@ -16,9 +16,9 @@ inputs:
     required: false
     default: 'normal'
   no-build:
-    description: "Set to false to disable dotnet build and dotnet restore"
+    description: "Set to true to disable dotnet build and dotnet restore"
     required: false
-    default: 'true'
+    default: 'false'
   #upload-artifact: TODO
     #description: "Set to true to upload <LivingDoc>.html artifact automatically"
     #required: false
@@ -32,8 +32,7 @@ runs:
   steps:
     - name: 'Run Specflow Tests'
       run: |
-        if [ ${{ inputs.no-build }} == 'false' ]; then dotnet test --no-build --verbosity ${{ inputs. verbosity }}; else dotnet test --verbosity ${{ inputs. verbosity }}; fi
-        #dotnet test --verbosity ${{ inputs.verbosity }}
+        if [ ${{ inputs.no-build }} == 'true' ]; then dotnet test --no-build --verbosity ${{ inputs. verbosity }}; else dotnet test --verbosity ${{ inputs. verbosity }}; fi
         dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
         livingdoc test-assembly ${{ inputs.test-assembly-dll }} -t ${{ inputs.test-execution-json }} -o ${{ inputs.output-html }}
         #if [ ${{ inputs.upload-artifact }} == 'true' ]; then UPLOAD; fi
