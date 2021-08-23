@@ -1,4 +1,4 @@
-name: .NET Core
+name: .NET
 
 on:
   push:
@@ -11,16 +11,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 5.0.x
+    - name: Build dotnet
+      run: |
+        dotnet restore
+        dotnet build --no-restore
     - uses:  cryptic-wizard/run-specflow-tests@v0.4
       with:
-        test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
-        test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
+        test-assembly-dll: RunSpecflowTests/bin/Debug/net5.0/RunSpecflowTests.dll
+        test-execution-json: RunSpecflowTests/bin/Debug/net5.0/TestExecution.json
         output-html: CalculatorResults.html
-        verbosity: normal
+        verbosity: minimal
+        no-build: true
     - name: Publish Specflow Test Results
       if: success() || failure()
       uses: actions/upload-artifact@v2
