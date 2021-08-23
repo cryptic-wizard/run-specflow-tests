@@ -17,8 +17,7 @@ jobs:
         dotnet-version: 3.1.x
     - name: Build dotnet
       run: |
-        dotnet restore
-        dotnet build --no-restore -f netcoreapp3.1
+        dotnet build -f netcoreapp3.1
     - uses:  cryptic-wizard/run-specflow-tests@v0.4
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll

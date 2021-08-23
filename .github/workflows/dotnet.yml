@@ -17,8 +17,7 @@ jobs:
         dotnet-version: 5.0.x
     - name: Build dotnet
       run: |
-        dotnet restore
-        dotnet build --no-restore -f net5.0
+        dotnet build -f net5.0
     - uses:  cryptic-wizard/run-specflow-tests@v0.4
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/net5.0/RunSpecflowTests.dll
