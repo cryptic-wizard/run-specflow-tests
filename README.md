@@ -15,7 +15,7 @@ steps:
 - uses: actions/setup-dotnet@v1
   with:
     dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.0.1
     with:
     test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
     test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
@@ -42,7 +42,7 @@ jobs:
   - uses: actions/setup-dotnet@v1
     with:
       dotnet-version: '3.1.x'
-  - uses: actions/cryptic-wizard/run-specflow-tests@v1.0
+  - uses: actions/cryptic-wizard/run-specflow-tests@v1.0.1
     with:
       test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
       test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
@@ -66,7 +66,7 @@ steps:
 - uses: actions/setup-dotnet@v1
   with:
     dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.0.1
   with:
     test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
     test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
