@@ -1,4 +1,4 @@
-name: 'Run SpecFlow Tests'
+name: 'run-specflow-tests'
 
 description: 'Github action to run SpecFlow tests and create LivingDoc artifact'
 inputs:
