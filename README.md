@@ -16,53 +16,48 @@ steps:
   with:
     dotnet-version: '3.1.x'
 - uses: actions/cryptic-wizard/run-specflow-tests@v0.6
-  with:
+    with:
     test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
     test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
     output-html: MyTestResults.html
-- uses: actions/upload-artifact@v2
+ - uses: actions/upload-artifact@v2
   if: success() || failure()
   with:
     name: SpecflowTestResults
     path: MyTestResults.html
 ```
 
+Test Multiple Operating Systems in the Same Workflow:
+```yaml
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    
+  steps:
+  - uses: actions/checkout@v2
+  - uses: actions/setup-dotnet@v1
+    with:
+      dotnet-version: '3.1.x'
+  - uses: actions/cryptic-wizard/run-specflow-tests@v0.6
+    with:
+      test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
+      test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
+      output-html: ${{ matrix.os }}.html
+  - uses: actions/upload-artifact@v2
+    if: success() || failure()
+    with:
+      name: SpecflowTestResults
+      path: ${{ matrix.os }}.html
+```
+
 Test Multiple Frameworks in Separate Workflows:
 * [dotnet.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnet.yml)
 * [dotnetcore.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnetcore.yml)
 * See also: [How to target multiple frameworks in a .csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
-
-Test Multiple Frameworks in the Same Workflow:
-```yaml
-steps:
-- uses: actions/checkout@v2
-- uses: actions/setup-dotnet@v1
-  with:
-    dotnet-version: '3.1.x'
-- uses: actions/setup-dotnet@v1
-  with:
-    dotnet-version: '5.0.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v0.6
-  with:
-    test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
-    test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
-    output-html: DotnetCoreResults.html
-    dotnet-version: netcoreapp3.1
-- uses: actions/cryptic-wizard/run-specflow-tests@v0.6
-  if: success() || failure()
-  with:
-    test-assembly-dll: RunSpecflowTests/bin/Debug/net5.0/RunSpecflowTests.dll
-    test-execution-json: RunSpecflowTests/bin/Debug/net5.0/TestExecution.json
-    output-html: DotnetResults.html
-    dotnet-version: net5.0
-- uses: actions/upload-artifact@v2
-  if: success() || failure()
-  with:
-    name: SpecflowTestResults
-    path: |
-      DotnetCoreResults.html
-      DotnetResults.html
-```
 
 Optional parameters:
 ```yaml
@@ -76,18 +71,19 @@ steps:
     test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
     test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
     output-html: MyTestResults.html
-    build-verbosity: quiet
+    build-verbosity: normal
     test-verbosity: minimal
     dotnet-version: netcoreapp3.1
+    no-build: true
 ```
 ## Planned Features
 * Set working folder for test-assembly-dll and test-execution-json
-* Dotnet framework matrix testing
 
 Features planned when ['uses' keyword is implemented in composite actions](https://github.com/actions/runner/issues/646)
 * Checkout automatically
 * Setup dotnet automatically
 * Upload artifacts automatically
+* Dotnet framework matrix testing
 ## Tools
 * [Visual Studio](https://visualstudio.microsoft.com/vs/)
 * [NUnit 3](https://nunit.org/)
