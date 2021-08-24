@@ -1,6 +1,10 @@
 name: 'run-specflow-tests'
-
 description: 'Github action to run SpecFlow tests and create LivingDoc artifact'
+author: 'cryptic-wizard'
+branding:
+  icon: check-square
+  color: green
+
 inputs:
   test-assembly-dll:
     description: "Relative path of <MySpecflowProject.dll> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/MySpecflowProject.dll)"
