@@ -20,7 +20,7 @@ jobs:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
         test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
         output-html: CalculatorResults.html
-        verbosity: normal
+        test-verbosity: normal
         no-build: true
         dotnet-version: netcoreapp3.1
     - name: Publish Specflow Test Results
