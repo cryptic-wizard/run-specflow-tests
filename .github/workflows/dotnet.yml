@@ -21,7 +21,6 @@ jobs:
         test-execution-json: RunSpecflowTests/bin/Debug/net5.0/TestExecution.json
         output-html: CalculatorResults.html
         test-verbosity: minimal
-        no-build: true
         dotnet-version: net5.0
     - name: Publish Specflow Test Results
       if: success() || failure()
