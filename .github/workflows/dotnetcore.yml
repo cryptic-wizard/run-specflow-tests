@@ -23,7 +23,7 @@ jobs:
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
         test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
-        output-html: CalculatorResults.html
+        output-html: ${{ matrix.os }}.html
         test-verbosity: normal
         dotnet-version: netcoreapp3.1
     - name: Publish Specflow Test Results
@@ -31,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: SpecflowTestResults
-        path: CalculatorResults.html
+        path: ${{ matrix.os }}.html
