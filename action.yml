@@ -1,5 +1,5 @@
 name: 'Run SpecFlow Tests'
-description: 'A Github Action to run SpecFlow tests'
+description: 'A Github Action to run SpecFlow tests and create a LivingDoc'
 author: 'cryptic-wizard'
 branding:
   icon: check-square
