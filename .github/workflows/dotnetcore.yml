@@ -1,16 +1,11 @@
 name: .NET Core
-
 on:
   push:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
     name: Build & Test
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -23,12 +18,12 @@ jobs:
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
         test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
-        output-html: ${{ matrix.os }}.html
-        test-verbosity: normal
+        output-html: CalculatorResults.html
+        test-verbosity: minimal
         dotnet-version: netcoreapp3.1
     - name: Publish Specflow Test Results
       if: success() || failure()
       uses: actions/upload-artifact@v2
       with:
         name: SpecflowTestResults
-        path: ${{ matrix.os }}.html
+        path: CalculatorResults.html
