@@ -76,6 +76,12 @@ steps:
     dotnet-version: netcoreapp3.1
     no-build: true
 ```
+## LivingDoc Output Example
+![SpecflowLivingDoc](https://user-images.githubusercontent.com/87053379/130558124-48f01dca-a841-470d-8038-d74241fb36b2.PNG)
+
+![SpecflowAnalytics](https://user-images.githubusercontent.com/87053379/130558132-74be6be5-8726-46a4-8c43-82daa053a603.PNG)
+
+
 ## Planned Features
 * Set working folder for test-assembly-dll and test-execution-json
 
