@@ -12,7 +12,11 @@ inputs:
     description: "Name of Specflow LivingDoc output file (must end with .html)"
     required: false
     default: 'LivingDoc.html'
-  verbosity:
+  build-verbosity:
+    description: "Verbosity of the Dotnet App Build (default = minimal)"
+    required: false
+    default: 'minimal'
+  test-verbosity:
     description: "Verbosity of the SpecFlow Test Execution (default = normal)"
     required: false
     default: 'normal'
@@ -20,6 +24,10 @@ inputs:
     description: "Set to true to disable dotnet build and dotnet restore"
     required: false
     default: 'false'
+  dotnet-version:
+    description: "Version of dotnet (example: netcoreapp3.1, net5.0)"
+    required: false
+    default: ''
   #upload-artifact: TODO
     #description: "Set to false to disable uploading <LivingDoc.html> artifact automatically"
     #required: false
@@ -33,15 +41,28 @@ runs:
       #uses: actions/setup-dotnet@v1
       #with:
         #dotnet-version: 3.1.x
+    - name: BuildDotnetApp
+      run: |
+        if [ ${{ inputs.no-build }} == 'true' ]
+          then echo 'Build Skipped'
+        elif [ ${{ inputs.dotnet-version }} == '' ]
+          then dotnet build --verbosity ${{ inputs.build-verbosity }}
+        else
+          dotnet build --verbosity ${{ inputs.build-verbosity }} -f ${{ inputs.dotnet-version }}
+        fi
+      shell: bash
     - name: RunSpecFlowTests
       run: |
-        if [ ${{ inputs.no-build }} == 'true' ]; then dotnet test --no-build --verbosity ${{ inputs. verbosity }}; else dotnet test --verbosity ${{ inputs. verbosity }}; fi
+        if [ ${{ inputs.dotnet-version }} == '' ]
+          then dotnet test --no-build --verbosity ${{ inputs.test-verbosity }}
+        else
+          then dotnet test --no-build --verbosity ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }}
+        fi
       shell: bash
     - name: GenerateSpecFlowLivingDoc
       run: |
         dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
         livingdoc test-assembly ${{ inputs.test-assembly-dll }} -t ${{ inputs.test-execution-json }} -o ${{ inputs.output-html }}
-        #if [ ${{ inputs.upload-artifact }} == 'true' ]; then UPLOAD; fi
       shell: bash
     #- name: 'Publish Specflow Test Results'
       #uses: actions/upload-artifact@v2

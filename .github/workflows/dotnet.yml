@@ -15,9 +15,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Build dotnet
-      run: |
-        dotnet build -f net5.0
     - uses:  cryptic-wizard/run-specflow-tests@v0.4
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/net5.0/RunSpecflowTests.dll
@@ -25,6 +22,7 @@ jobs:
         output-html: CalculatorResults.html
         verbosity: minimal
         no-build: true
+        dotnet-version: net5.0
     - name: Publish Specflow Test Results
       if: success() || failure()
       uses: actions/upload-artifact@v2
