@@ -15,10 +15,11 @@ steps:
 - uses: actions/setup-dotnet@v1
   with:
     dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.0.2
-    with:
-    test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
-    test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.1.0
+  with:
+    test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
+    test-assembly-dll: MySpecflowProject.dll
+    test-execution-json: TestExecution.json
     output-html: MyTestResults.html
  - uses: actions/upload-artifact@v2
   if: success() || failure()
@@ -42,10 +43,11 @@ jobs:
   - uses: actions/setup-dotnet@v1
     with:
       dotnet-version: '3.1.x'
-  - uses: actions/cryptic-wizard/run-specflow-tests@v1.0.2
+  - uses: actions/cryptic-wizard/run-specflow-tests@v1.1.0
     with:
-      test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
-      test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
+      test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
+      test-assembly-dll: MySpecflowProject.dll
+      test-execution-json: TestExecution.json
       output-html: ${{ matrix.os }}.html
   - uses: actions/upload-artifact@v2
     if: success() || failure()
@@ -61,20 +63,18 @@ Test Multiple Frameworks in Separate Workflows:
 
 Optional parameters:
 ```yaml
-steps:
-- uses: actions/checkout@v2
-- uses: actions/setup-dotnet@v1
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.1.0
   with:
-    dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.0.2
-  with:
-    test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
-    test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
+    test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
+    test-assembly-dll: MySpecflowProject.dll
+    test-execution-json: TestExecution.json
     output-html: MyTestResults.html
     build-verbosity: normal
     test-verbosity: minimal
     dotnet-version: netcoreapp3.1
     no-build: true
+    logger: trx
+    logger-file-name: MyTestResults.trx
 ```
 ## LivingDoc Output Example
 ![SpecflowLivingDoc](https://user-images.githubusercontent.com/87053379/130558124-48f01dca-a841-470d-8038-d74241fb36b2.PNG)
@@ -83,7 +83,8 @@ steps:
 
 
 ## Planned Features
-* Set working folder for test-assembly-dll and test-execution-json
+* Set working folder for test-assembly-dll and test-execution-json (implemented v1.1.0)
+* Allow other test loggers to be run in addition to SpecFlow (implemented v1.1.0)
 
 Features planned when ['uses' keyword is implemented in composite actions](https://github.com/actions/runner/issues/646)
 * Checkout automatically
