@@ -14,7 +14,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.x
-    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0-alpha5
+    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0-alpha6
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
         test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
@@ -30,4 +30,4 @@ jobs:
         name: SpecflowTestResults
         path: |
           CalculatorResults.html
-          /TestResults/CalculatorResults.trx
+          TestResults/CalculatorResults.trx

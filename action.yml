@@ -6,6 +6,10 @@ branding:
   color: green
 
 inputs:
+  test-assembly-path:
+    description: "Path of the working directory of for build assemblies (example: MySpecflowProject/bin/Debug/netcoreapp3.1)"
+    required: false
+    default: ''
   test-assembly-dll:
     description: "Relative path of <MySpecflowProject.dll> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/MySpecflowProject.dll)"
     required: true
@@ -78,7 +82,7 @@ runs:
     - name: GenerateSpecFlowLivingDoc
       run: |
         dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
-        livingdoc test-assembly ${{ inputs.test-assembly-dll }} -t ${{ inputs.test-execution-json }} -o ${{ inputs.output-html }}
+        livingdoc test-assembly ${{ inputs.test-assembly-path }}/${{ inputs.test-assembly-dll }} -t ${{ inputs.test-assembly-path }}/${{ inputs.test-execution-json }} -o ${{ inputs.output-html }}
       shell: bash
     #- name: 'Publish Specflow Test Results'
       #uses: actions/upload-artifact@v2

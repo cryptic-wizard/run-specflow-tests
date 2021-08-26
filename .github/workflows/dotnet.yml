@@ -14,10 +14,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0-alpha5
+    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0-alpha6
       with:
-        test-assembly-dll: RunSpecflowTests/bin/Debug/net5.0/RunSpecflowTests.dll
-        test-execution-json: RunSpecflowTests/bin/Debug/net5.0/TestExecution.json
+        test-assembly-path: RunSpecflowTests/bin/Debug/net5.0/
+        test-assembly-dll: RunSpecflowTests.dll
+        test-execution-json: TestExecution.json
         output-html: CalculatorResults.html
         test-verbosity: minimal
         dotnet-version: net5.0
