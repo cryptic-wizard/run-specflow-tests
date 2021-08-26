@@ -13,7 +13,7 @@ inputs:
     description: "Relative path of <MySpecflowProjectTestExecution(s).json> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/TestExecution.json)"
     required: true
   output-html:
-    description: "Name of Specflow LivingDoc output file (must end with .html)"
+    description: "Name of Specflow LivingDoc output file (must end with .html) (example: MyTestResults.html)"
     required: false
     default: 'LivingDoc.html'
   build-verbosity:
@@ -29,7 +29,11 @@ inputs:
     required: false
     default: 'false'
   logger:
-    description: "Dotnet test logger to run in addition to Specflow Test Logger"
+    description: "Dotnet test logger to run in addition to Specflow Test Logger (example: trx)"
+    required: false
+    default: ''
+  logger-file-name:
+    description: "Dotnet test log file name; required if logger is defined (example: MyTestResults.trx)"
     required: false
     default: ''
   dotnet-version:
@@ -64,11 +68,11 @@ runs:
         if [ ${{ inputs.dotnet-version }} == '' && ${{ inputs.logger }} == '' ]; then
           dotnet test --no-build -v ${{ inputs.test-verbosity }}
         elif [ ${{ inputs.dotnet-version }} == '' ]; then
-          dotnet test --no-build -v ${{ inputs.test-verbosity }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }}"
+          dotnet test --no-build -v ${{ inputs.test-verbosity }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
         elif [ ${{ inputs.logger }} == '' ]; then
           dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }}
-        else #dotnet-version defined && logger defined
-          dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }}"
+        else
+          dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
         fi
       shell: bash
     - name: GenerateSpecFlowLivingDoc
