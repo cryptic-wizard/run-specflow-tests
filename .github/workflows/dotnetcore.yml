@@ -30,4 +30,4 @@ jobs:
         name: SpecflowTestResults
         path: |
           CalculatorResults.html
-          CalculatorResults.trx
+          TestResults/CalculatorResults.trx
