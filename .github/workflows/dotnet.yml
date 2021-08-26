@@ -20,7 +20,6 @@ jobs:
         test-assembly-dll: RunSpecflowTests.dll
         test-execution-json: TestExecution.json
         output-html: CalculatorResults.html
-        test-verbosity: minimal
         dotnet-version: net5.0
     - name: Publish Specflow Test Results
       if: success() || failure()
