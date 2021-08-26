@@ -22,7 +22,7 @@ jobs:
         test-verbosity: minimal
         dotnet-version: netcoreapp3.1
         logger: trx
-        logger-file-name: CalculatorResults.trx
+        logger-file-name: ../../CalculatorResults.trx
     - name: Publish Specflow Test Results
       if: success() || failure()
       uses: actions/upload-artifact@v2
@@ -30,4 +30,4 @@ jobs:
         name: SpecflowTestResults
         path: |
           CalculatorResults.html
-          TestResults/CalculatorResults.trx
+          CalculatorResults.trx
