@@ -14,7 +14,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0-alpha7
+    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0
       with:
         test-assembly-path: RunSpecflowTests/bin/Debug/net5.0
         test-assembly-dll: RunSpecflowTests.dll
