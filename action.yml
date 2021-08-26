@@ -65,12 +65,12 @@ runs:
       shell: bash
     - name: RunSpecFlowTests
       run: |
-        if [ ${{ inputs.dotnet-version }} == '' && (${{ inputs.logger }} == '' || ${{ inputs.logger-file-name }} == '') ]; then
+        if   [ ${{ inputs.logger }} == '' ] || [ ${{ inputs.logger-file-name }} == '' ] && [ ${{ inputs.dotnet-version }} == '' ]; then
           dotnet test --no-build -v ${{ inputs.test-verbosity }}
+        elif [ ${{ inputs.logger }} == '' ] || [ ${{ inputs.logger-file-name }} == '' ]; then
+          dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }}
         elif [ ${{ inputs.dotnet-version }} == '' ]; then
           dotnet test --no-build -v ${{ inputs.test-verbosity }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
-        elif [ (${{ inputs.logger }} == '' || ${{ inputs.logger-file-name }} == '') ]; then
-          dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }}
         else
           dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
         fi
