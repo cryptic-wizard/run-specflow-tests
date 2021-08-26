@@ -74,7 +74,7 @@ Optional parameters:
     dotnet-version: netcoreapp3.1
     no-build: true
     logger: trx
-    logger-file-name: MyTestResults.trx
+    logger-file-name: ../../MyTestResults.trx
 ```
 ## LivingDoc Output Example
 ![SpecflowLivingDoc](https://user-images.githubusercontent.com/87053379/130558124-48f01dca-a841-470d-8038-d74241fb36b2.PNG)
