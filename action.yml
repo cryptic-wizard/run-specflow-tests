@@ -28,6 +28,10 @@ inputs:
     description: "Set to true to disable dotnet build and dotnet restore"
     required: false
     default: 'false'
+  logger:
+    description: "Dotnet test logger to run in addition to Specflow Test Logger"
+    required: false
+    default: ''
   dotnet-version:
     description: "Version of dotnet (example: netcoreapp3.1, net5.0)"
     required: false
@@ -50,17 +54,21 @@ runs:
         if [ ${{ inputs.no-build }} == 'true' ]; then
           echo 'Build Skipped'
         elif [ ${{ inputs.dotnet-version }} == '' ]; then
-          dotnet build --verbosity ${{ inputs.build-verbosity }}
+          dotnet build -v ${{ inputs.build-verbosity }}
         else
-          dotnet build --verbosity ${{ inputs.build-verbosity }} -f ${{ inputs.dotnet-version }}
+          dotnet build -v ${{ inputs.build-verbosity }} -f ${{ inputs.dotnet-version }}
         fi
       shell: bash
     - name: RunSpecFlowTests
       run: |
-        if [ ${{ inputs.dotnet-version }} == '' ]; then
-          dotnet test --no-build --verbosity ${{ inputs.test-verbosity }}
-        else
-          dotnet test --no-build --verbosity ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }}
+        if [ ${{ inputs.dotnet-version }} == '' && ${{ inputs.logger }} == '' ]; then
+          dotnet test --no-build -v ${{ inputs.test-verbosity }}
+        elif [ ${{ inputs.dotnet-version }} == '' ]; then
+          dotnet test --no-build -v ${{ inputs.test-verbosity }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }}"
+        elif [ ${{ inputs.logger }} == '' ]; then
+          dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }}
+        else #dotnet-version defined && logger defined
+          dotnet test --no-build -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }}"
         fi
       shell: bash
     - name: GenerateSpecFlowLivingDoc

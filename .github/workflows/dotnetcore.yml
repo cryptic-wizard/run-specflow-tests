@@ -21,6 +21,7 @@ jobs:
         output-html: CalculatorResults.html
         test-verbosity: minimal
         dotnet-version: netcoreapp3.1
+        logger: trx
     - name: Publish Specflow Test Results
       if: success() || failure()
       uses: actions/upload-artifact@v2
