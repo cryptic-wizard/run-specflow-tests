@@ -1,23 +1,26 @@
 ## Description
 * A Github action to run SpecFlow tests and create a [SpecFlow+ LivingDoc](https://specflow.org/tools/living-doc/) artifact
-* SpecFlow projects must have a Package Reference to [SpecFlow.Plus.LivingDocPlugin](https://www.nuget.org/packages/SpecFlow.Plus.LivingDocPlugin/)
-  * [Example .csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
+* SpecFlow projects must have a Package Reference to [SpecFlow.Plus.LivingDocPlugin](https://www.nuget.org/packages/SpecFlow.Plus.LivingDocPlugin/) in the [.csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
+```xml
+<PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.50" />
+```
+
 ## Tests
 [![.NET](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet.yml/badge.svg)](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet.yml)
 
 [![.NET Core](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnetcore.yml/badge.svg)](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnetcore.yml)
 
 ## Usage
-Minimal:
+#### Minimal:
 ```yaml
 steps:
 - uses: actions/checkout@v2
 - uses: actions/setup-dotnet@v1
   with:
     dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.1.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.2.0
   with:
-    test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
+    test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
     test-assembly-dll: MySpecflowProject.dll
     test-execution-json: TestExecution.json
     output-html: MyTestResults.html
@@ -28,7 +31,7 @@ steps:
     path: MyTestResults.html
 ```
 
-Test Multiple Operating Systems in the Same Workflow:
+#### Test Multiple Operating Systems in the Same Workflow:
 ```yaml
 jobs:
   build:
@@ -43,9 +46,9 @@ jobs:
   - uses: actions/setup-dotnet@v1
     with:
       dotnet-version: '3.1.x'
-  - uses: actions/cryptic-wizard/run-specflow-tests@v1.1.0
+  - uses: actions/cryptic-wizard/run-specflow-tests@v1.2.0
     with:
-      test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
+      test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
       test-assembly-dll: MySpecflowProject.dll
       test-execution-json: TestExecution.json
       output-html: ${{ matrix.os }}.html
@@ -56,22 +59,26 @@ jobs:
       path: ${{ matrix.os }}.html
 ```
 
-Test Multiple Frameworks in Separate Workflows:
+#### Test Multiple Frameworks in Separate Workflows:
+* Target multiple frameworks in the [.csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
+```xml
+<TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+```
 * [dotnet.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnet.yml)
 * [dotnetcore.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnetcore.yml)
-* See also: [How to target multiple frameworks in a .csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
 
-Optional parameters:
+#### Optional parameters:
 ```yaml
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.1.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.2.0
   with:
     test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
     test-assembly-dll: MySpecflowProject.dll
     test-execution-json: TestExecution.json
+    configuration: Debug
     output-html: MyTestResults.html
     build-verbosity: normal
     test-verbosity: minimal
-    dotnet-version: netcoreapp3.1
+    framework: netcoreapp3.1
     no-build: true
     logger: trx
     logger-file-name: ../../MyTestResults.trx
@@ -82,10 +89,23 @@ Optional parameters:
 ![SpecflowAnalytics](https://user-images.githubusercontent.com/87053379/130558132-74be6be5-8726-46a4-8c43-82daa053a603.PNG)
 
 
-## Planned Features
-* Set working folder for test-assembly-dll and test-execution-json (implemented v1.1.0)
-* Allow other test loggers to be run in addition to SpecFlow (implemented v1.1.0)
+## Features
+#### Recently Added
+* v1.2.0 - Add configuration option
+```yaml
+configuration:
+```
+* v1.1.0 - Set working folder for test-assembly-dll and test-execution-json
+```yaml
+test-assembly-path:
+```
+* v1.1.0 - Allow other test loggers to be run in addition to SpecFlow
+```yaml
+logger:
+logger-file-name:
+```
 
+#### Planned Features
 Features planned when ['uses' keyword is implemented in composite actions](https://github.com/actions/runner/issues/646)
 * Checkout automatically
 * Setup dotnet automatically

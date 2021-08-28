@@ -14,12 +14,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.x
-    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0
+    - uses:  cryptic-wizard/run-specflow-tests@v1.2.0-alpha2
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
         test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
         output-html: CalculatorResults.html
-        dotnet-version: netcoreapp3.1
+        framework: netcoreapp3.1
+        configuration: 'Debug'
         logger: trx
         logger-file-name: ../../CalculatorResults.trx
     - name: Publish Specflow Test Results
