@@ -2,7 +2,7 @@
 * A Github action to run SpecFlow tests and create a [SpecFlow+ LivingDoc](https://specflow.org/tools/living-doc/) artifact
 * SpecFlow projects must have a Package Reference to [SpecFlow.Plus.LivingDocPlugin](https://www.nuget.org/packages/SpecFlow.Plus.LivingDocPlugin/) in the [.csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
 ```Shell
-dotnet add package SpecFlow.Plus.LivingDocPlugin --version 3.9.50
+dotnet add package SpecFlow.Plus.LivingDocPlugin
 ```
 ```xml
 <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.50" />
