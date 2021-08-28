@@ -21,7 +21,7 @@ inputs:
     required: false
     default: 'LivingDoc.html'
   framework:
-    description: "Version of dotnet (example: netcoreapp3.1, net5.0)"
+    description: "Framework version of dotnet (example: netcoreapp3.1, net5.0)"
     required: false
     default: 'null'
   configuration:
