@@ -14,13 +14,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - uses:  cryptic-wizard/run-specflow-tests@v1.2.0-alpha1
+    - uses:  cryptic-wizard/run-specflow-tests@v1.2.0-alpha2
       with:
         test-assembly-path: RunSpecflowTests/bin/Release/net5.0
         test-assembly-dll: RunSpecflowTests.dll
         test-execution-json: TestExecution.json
         output-html: CalculatorResults.html
-        dotnet-version: net5.0
+        framework: net5.0
     - name: Publish Specflow Test Results
       if: success() || failure()
       uses: actions/upload-artifact@v2

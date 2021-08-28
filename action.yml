@@ -20,6 +20,14 @@ inputs:
     description: "Name of Specflow LivingDoc output file (must end with .html) (example: MyTestResults.html)"
     required: false
     default: 'LivingDoc.html'
+  framework:
+    description: "Version of dotnet (example: netcoreapp3.1, net5.0)"
+    required: false
+    default: 'null'
+  configuration:
+    description: "Build configuration (example: Debug)"
+    required: false
+    default: 'Release'
   build-verbosity:
     description: "Verbosity of the Dotnet App Build (default = minimal)"
     required: false
@@ -28,10 +36,6 @@ inputs:
     description: "Verbosity of the SpecFlow Test Execution (default = normal)"
     required: false
     default: 'normal'
-  configuration:
-    description: "Build configuration (example: Debug)"
-    required: false
-    default: 'Release'
   no-build:
     description: "Set to true to disable dotnet build and dotnet restore"
     required: false
@@ -42,10 +46,6 @@ inputs:
     default: 'null'
   logger-file-name:
     description: "Dotnet test log file name; required if logger is defined (example: MyTestResults.trx)"
-    required: false
-    default: 'null'
-  dotnet-version:
-    description: "Version of dotnet (example: netcoreapp3.1, net5.0)"
     required: false
     default: 'null'
   #upload-artifact: TODO on composite action 'uses'
@@ -65,22 +65,22 @@ runs:
       run: |
         if [ ${{ inputs.no-build }} == 'true' ]; then
           echo 'Build Skipped'
-        elif [ ${{ inputs.dotnet-version }} == 'null' ]; then
+        elif [ ${{ inputs.framework }} == 'null' ]; then
           dotnet build -c ${{ inputs.configuration }} -v ${{ inputs.build-verbosity }}
         else
-          dotnet build -c ${{ inputs.configuration }} -v ${{ inputs.build-verbosity }} -f ${{ inputs.dotnet-version }}
+          dotnet build -c ${{ inputs.configuration }} -v ${{ inputs.build-verbosity }} -f ${{ inputs.framework }}
         fi
       shell: bash
     - name: RunSpecFlowTests
       run: |
-        if   [ ${{ inputs.logger }} == 'null' ] || [ ${{ inputs.logger-file-name }} == 'null' ] && [ ${{ inputs.dotnet-version }} == 'null' ]; then
+        if   [ ${{ inputs.logger }} == 'null' ] || [ ${{ inputs.logger-file-name }} == 'null' ] && [ ${{ inputs.framework }} == 'null' ]; then
           dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }}
         elif [ ${{ inputs.logger }} == 'null' ] || [ ${{ inputs.logger-file-name }} == 'null' ]; then
-          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }}
-        elif [ ${{ inputs.dotnet-version }} == 'null' ]; then
+          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -f ${{ inputs.framework }}
+        elif [ ${{ inputs.framework }} == 'null' ]; then
           dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
         else
-          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -f ${{ inputs.dotnet-version }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
+          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -f ${{ inputs.framework }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
         fi
       shell: bash
     - name: GenerateSpecFlowLivingDoc
