@@ -14,9 +14,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - uses:  cryptic-wizard/run-specflow-tests@v1.1.0
+    - uses:  cryptic-wizard/run-specflow-tests@v1.2.0-alpha1
       with:
-        test-assembly-path: RunSpecflowTests/bin/Debug/net5.0
+        test-assembly-path: RunSpecflowTests/bin/Release/net5.0
         test-assembly-dll: RunSpecflowTests.dll
         test-execution-json: TestExecution.json
         output-html: CalculatorResults.html
