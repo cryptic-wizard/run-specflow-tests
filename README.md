@@ -27,11 +27,6 @@ steps:
     test-assembly-dll: MySpecflowProject.dll
     test-execution-json: TestExecution.json
     output-html: MyTestResults.html
- - uses: actions/upload-artifact@v2
-  if: success() || failure()
-  with:
-    name: SpecflowTestResults
-    path: MyTestResults.html
 ```
 
 #### Test Multiple Operating Systems in the Same Workflow:
@@ -55,11 +50,6 @@ jobs:
       test-assembly-dll: MySpecflowProject.dll
       test-execution-json: TestExecution.json
       output-html: ${{ matrix.os }}.html
-  - uses: actions/upload-artifact@v2
-    if: success() || failure()
-    with:
-      name: SpecflowTestResults
-      path: ${{ matrix.os }}.html
 ```
 
 #### Test Multiple Frameworks in Separate Workflows:
@@ -112,7 +102,6 @@ logger-file-name:
 Features planned when ['uses' keyword is implemented in composite actions](https://github.com/actions/runner/issues/646)
 * Checkout automatically
 * Setup dotnet automatically
-* Upload artifacts automatically
 * Dotnet framework matrix testing
 ## Tools
 * [Visual Studio](https://visualstudio.microsoft.com/vs/)

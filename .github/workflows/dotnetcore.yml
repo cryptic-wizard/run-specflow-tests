@@ -14,7 +14,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.x
-    - uses:  cryptic-wizard/run-specflow-tests@v1.2.0
+    - uses:  ./
       with:
         test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
         test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
@@ -23,11 +23,10 @@ jobs:
         configuration: 'Debug'
         logger: trx
         logger-file-name: ../../CalculatorResults.trx
-    - name: Publish Specflow Test Results
+    - name: Publish Specflow Test Logs
       if: success() || failure()
       uses: actions/upload-artifact@v2
       with:
-        name: SpecflowTestResults
+        name: SpecflowLogs
         path: |
-          CalculatorResults.html
           CalculatorResults.trx
