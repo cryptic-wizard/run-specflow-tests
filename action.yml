@@ -7,15 +7,16 @@ branding:
 
 inputs:
   test-assembly-path:
-    description: "Path of the working directory of for build assemblies (example: MySpecflowProject/bin/Debug/netcoreapp3.1)"
+    description: "Path of the working directory for build assemblies (example: MySpecflowProject/bin/Debug/netcoreapp3.1)"
     required: false
     default: 'null'
   test-assembly-dll:
-    description: "Relative path of <MySpecflowProject.dll> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/MySpecflowProject.dll)"
+    description: "Relative path of <MySpecflowProject.dll> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/MySpecflowProject.dll or MySpecflowProject.dll if using test-assembly-path)"
     required: true
   test-execution-json:
-    description: "Relative path of <MySpecflowProjectTestExecution(s).json> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/TestExecution.json)"
-    required: true
+    description: "Relative path of <MySpecflowProjectTestExecution(s).json> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/TestExecution.json or TestExecution.json if using test-assembly-path)"
+    required: false
+    default: 'TestExecution.json'
   output-html:
     description: "Name of Specflow LivingDoc output file (must end with .html) (example: MyTestResults.html)"
     required: false

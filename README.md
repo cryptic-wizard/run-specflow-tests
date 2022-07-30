@@ -25,7 +25,6 @@ steps:
   with:
     test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
     test-assembly-dll: MySpecflowProject.dll
-    test-execution-json: TestExecution.json
     output-html: MyTestResults.html
 ```
 
@@ -48,7 +47,6 @@ jobs:
     with:
       test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
       test-assembly-dll: MySpecflowProject.dll
-      test-execution-json: TestExecution.json
       output-html: ${{ matrix.os }}.html
 ```
 

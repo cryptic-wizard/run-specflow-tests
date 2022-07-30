@@ -18,7 +18,6 @@ jobs:
       with:
         test-assembly-path: RunSpecflowTests/bin/Release/net6.0
         test-assembly-dll: RunSpecflowTests.dll
-        test-execution-json: TestExecution.json
         output-html: CalculatorResults.html
         framework: net6.0
         upload-artifact: false
