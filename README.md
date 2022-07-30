@@ -5,7 +5,7 @@
 dotnet add package SpecFlow.Plus.LivingDocPlugin
 ```
 ```xml
-<PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.50" />
+<PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
 ```
 
 ## Tests
