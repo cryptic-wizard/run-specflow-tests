@@ -48,52 +48,54 @@ inputs:
     description: "Dotnet test log file name; required if logger is defined (example: MyTestResults.trx)"
     required: false
     default: 'null'
-  #upload-artifact: TODO on composite action 'uses'
-    #description: "Set to false to disable uploading <LivingDoc.html> artifact automatically"
-    #required: false
-    #default: 'true'
+  upload-artifact:
+    description: "Set to false to disable uploading <LivingDoc.html> artifact automatically"
+    required: false
+    default: 'true'
 runs:
   using: composite
   steps:
-    #- name: Checkout TODO on composite action 'uses'
-      #uses: actions/checkout@v2
-    #- name: Setup .NET Core
-      #uses: actions/setup-dotnet@v1
-      #with:
-        #dotnet-version: 3.1.x
     - name: BuildDotnetApp
       run: |
-        if [ ${{ inputs.no-build }} == 'true' ]; then
-          echo 'Build Skipped'
-        elif [ ${{ inputs.framework }} == 'null' ]; then
-          dotnet build -c ${{ inputs.configuration }} -v ${{ inputs.build-verbosity }}
-        else
-          dotnet build -c ${{ inputs.configuration }} -v ${{ inputs.build-verbosity }} -f ${{ inputs.framework }}
-        fi
+        _args=()
+        [ "${{ inputs.configuration }}" != 'null' ] && _args+=("-c" "${{ inputs.configuration }}")
+        [ "${{ inputs.build-verbosity }}" != 'null' ] && _args+=("-v" "${{ inputs.build-verbosity }}")
+        [ "${{ inputs.framework }}" != 'null' ] && _args+=("-f" "${{ inputs.framework }}")
+
+        [ ${{ inputs.no-build }} == 'true' ] && echo 'Build Skipped' || dotnet build "${_args[@]}"
       shell: bash
     - name: RunSpecFlowTests
       run: |
-        if   [ ${{ inputs.logger }} == 'null' ] || [ ${{ inputs.logger-file-name }} == 'null' ] && [ ${{ inputs.framework }} == 'null' ]; then
-          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }}
-        elif [ ${{ inputs.logger }} == 'null' ] || [ ${{ inputs.logger-file-name }} == 'null' ]; then
-          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -f ${{ inputs.framework }}
-        elif [ ${{ inputs.framework }} == 'null' ]; then
-          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
-        else
-          dotnet test --no-build -c ${{ inputs.configuration }} -v ${{ inputs.test-verbosity }} -f ${{ inputs.framework }} -l "${{ inputs.logger }};verbosity=${{ inputs.test-verbosity }};LogFileName=${{ inputs.logger-file-name }}"
+        _args=()
+        _logger_args=()
+        [ "${{ inputs.configuration }}" != 'null' ] && _args+=("-c" "${{ inputs.configuration }}")
+        [ "${{ inputs.build-verbosity }}" != 'null' ] && _args+=("-v" "${{ inputs.build-verbosity }}")
+        [ "${{ inputs.framework }}" != 'null' ] && _args+=("-f" "${{ inputs.framework }}")
+        [ "${{ inputs.test-verbosity }}" != 'null' ] && _logger_args+=(";verbosity=${{ inputs.test-verbosity }}")
+        [ "${{ inputs.logger-file-name }}" != 'null' ] && _logger_args+=(";LogFileName=${{ inputs.logger-file-name }}")
+        [ "${{ inputs.logger }}" != 'null' ] && _args+=("-l" "${{ inputs.logger }}$(IFS=; echo "${_logger_args[@]}")")
+        
+        if ! dotnet test --no-build "${_args[@]}"; then
+            echo "_EXIT=1" >> $GITHUB_ENV
         fi
       shell: bash
-    - name: GenerateSpecFlowLivingDoc
+      continue-on-error: true
+    - name: GenerateLivingSpec
       run: |
+        [ "${{ inputs.test-assembly-path }}" != 'null' ] && _path="${{ inputs.test-assembly-path }}"
+        _dll="${_path:+$_path/}${{ inputs.test-assembly-dll }}"
+        _test="${_path:+$_path/}${{ inputs.test-execution-json }}"
+
         dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
-        if [ ${{ inputs.test-assembly-path }} != 'null' ]; then
-          livingdoc test-assembly ${{ inputs.test-assembly-path }}/${{ inputs.test-assembly-dll }} -t ${{ inputs.test-assembly-path }}/${{ inputs.test-execution-json }} -o ${{ inputs.output-html }}
-        else
-          livingdoc test-assembly ${{ inputs.test-assembly-dll }} -t ${{ inputs.test-execution-json }} -o ${{ inputs.output-html }}
-        fi
+        livingdoc test-assembly "$_dll" -t "$_test" -o "${{ inputs.output-html }}"
       shell: bash
-    #- name: 'Publish Specflow Test Results'
-      #uses: actions/upload-artifact@v2
-      #with:
-        #name: 'Specflow Test Results'
-        #path: ${{ output-html }}
+    - name: 'Publish Specflow Test Results'
+      if: ${{ inputs.upload-artifact == 'true' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: 'Specflow Test Results'
+        path: ${{ inputs.output-html }}
+    - name: ReturnCode
+      run: |
+        echo "${_EXIT:-0}"
+      shell: bash

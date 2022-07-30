@@ -1,4 +1,4 @@
-name: .NET 6.0
+name: .NET 6.0 No Artifacts
 on:
   push:
 
@@ -21,3 +21,4 @@ jobs:
         test-execution-json: TestExecution.json
         output-html: CalculatorResults.html
         framework: net6.0
+        upload-artifact: false
