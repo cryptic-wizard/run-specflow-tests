@@ -21,7 +21,7 @@ steps:
 - uses: actions/setup-dotnet@v1
   with:
     dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.2.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.0
   with:
     test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
     test-assembly-dll: MySpecflowProject.dll
@@ -44,7 +44,7 @@ jobs:
   - uses: actions/setup-dotnet@v1
     with:
       dotnet-version: '3.1.x'
-  - uses: actions/cryptic-wizard/run-specflow-tests@v1.2.0
+  - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.0
     with:
       test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
       test-assembly-dll: MySpecflowProject.dll
@@ -55,14 +55,14 @@ jobs:
 #### Test Multiple Frameworks in Separate Workflows:
 * Target multiple frameworks in the [.csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
 ```xml
-<TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+<TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
 ```
 * [dotnet.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnet.yml)
 * [dotnetcore.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnetcore.yml)
 
 #### Optional parameters:
 ```yaml
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.2.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.0
   with:
     test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
     test-assembly-dll: MySpecflowProject.dll
@@ -75,6 +75,7 @@ jobs:
     no-build: true
     logger: trx
     logger-file-name: ../../MyTestResults.trx
+    upload-artifact: false
 ```
 ## LivingDoc Output Example
 ![SpecflowLivingDoc](https://user-images.githubusercontent.com/87053379/130558124-48f01dca-a841-470d-8038-d74241fb36b2.PNG)
@@ -84,6 +85,10 @@ jobs:
 
 ## Features
 #### Recently Added
+* v1.3.0 - Autopublish artifacts - thanks [awgeorge](https://github.com/cryptic-wizard/run-specflow-tests/commit/60ce86858a5354c70db351767d7f96cd71b6c8b1)!
+```yaml
+upload-artifact: true by default
+```
 * v1.2.0 - Add configuration option
 ```yaml
 configuration:
