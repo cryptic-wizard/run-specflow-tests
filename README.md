@@ -21,7 +21,7 @@ steps:
 - uses: actions/setup-dotnet@v1
   with:
     dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.1
   with:
     test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
     test-assembly-dll: MySpecflowProject.dll
@@ -43,7 +43,7 @@ jobs:
   - uses: actions/setup-dotnet@v1
     with:
       dotnet-version: '3.1.x'
-  - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.0
+  - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.1
     with:
       test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
       test-assembly-dll: MySpecflowProject.dll
@@ -60,7 +60,7 @@ jobs:
 
 #### Optional parameters:
 ```yaml
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.0
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.1
   with:
     test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
     test-assembly-dll: MySpecflowProject.dll
@@ -83,6 +83,10 @@ jobs:
 
 ## Features
 #### Recently Added
+* v1.3.1 - test-execution-json now has default value
+```yaml
+test-execution-json: 'TestExecution.json' by default
+```
 * v1.3.0 - Autopublish artifacts - thanks [awgeorge](https://github.com/cryptic-wizard/run-specflow-tests/commit/60ce86858a5354c70db351767d7f96cd71b6c8b1)!
 ```yaml
 upload-artifact: true by default
