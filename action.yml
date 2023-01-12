@@ -98,5 +98,5 @@ runs:
         path: ${{ inputs.output-html }}
     - name: ReturnCode
       run: |
-        echo "${_EXIT:-0}"
+        exit "${_EXIT:-0}"
       shell: bash
