@@ -17,8 +17,8 @@ dotnet add package SpecFlow.Plus.LivingDocPlugin
 #### Minimal:
 ```yaml
 steps:
-- uses: actions/checkout@v2
-- uses: actions/setup-dotnet@v1
+- uses: actions/checkout@v4
+- uses: actions/setup-dotnet@v4
   with:
     dotnet-version: '7.0.x'
 - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.3
@@ -39,8 +39,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     
   steps:
-  - uses: actions/checkout@v2
-  - uses: actions/setup-dotnet@v1
+  - uses: actions/checkout@v4
+  - uses: actions/setup-dotnet@v4
     with:
       dotnet-version: '7.0.x'
   - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.3
@@ -55,8 +55,8 @@ jobs:
 ```xml
 <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 ```
-* [dotnet.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnet.yml)
-* [dotnetcore.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnetcore.yml)
+* [dotnet6.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnet6.yml)
+* [dotnet7.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnet7.yml)
 
 #### Optional parameters:
 ```yaml
