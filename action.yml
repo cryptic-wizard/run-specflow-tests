@@ -97,7 +97,7 @@ runs:
       shell: bash
     - name: 'Publish Specflow Test Results'
       if: ${{ inputs.upload-artifact == 'true' }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: 'Specflow Test Results'
         path: ${{ inputs.output-html }}
