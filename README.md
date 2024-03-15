@@ -9,9 +9,9 @@ dotnet add package SpecFlow.Plus.LivingDocPlugin
 ```
 
 ## Tests
-[![.NET](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet.yml/badge.svg)](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet.yml)
+[![.NET 6](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet6.yml/badge.svg)](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet6.yml)
 
-[![.NET Core](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnetcore.yml/badge.svg)](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnetcore.yml)
+[![.NET 7](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet7.yml/badge.svg)](https://github.com/cryptic-wizard/run-specflow-tests/actions/workflows/dotnet7.yml)
 
 ## Usage
 #### Minimal:
@@ -20,10 +20,10 @@ steps:
 - uses: actions/checkout@v2
 - uses: actions/setup-dotnet@v1
   with:
-    dotnet-version: '3.1.x'
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.1
+    dotnet-version: '7.0.x'
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.3
   with:
-    test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
+    test-assembly-path: MySpecflowProject/bin/Release/net7.0
     test-assembly-dll: MySpecflowProject.dll
     output-html: MyTestResults.html
 ```
@@ -42,10 +42,10 @@ jobs:
   - uses: actions/checkout@v2
   - uses: actions/setup-dotnet@v1
     with:
-      dotnet-version: '3.1.x'
-  - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.1
+      dotnet-version: '7.0.x'
+  - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.3
     with:
-      test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
+      test-assembly-path: MySpecflowProject/bin/Release/net7.0
       test-assembly-dll: MySpecflowProject.dll
       output-html: ${{ matrix.os }}.html
 ```
@@ -53,23 +53,24 @@ jobs:
 #### Test Multiple Frameworks in Separate Workflows:
 * Target multiple frameworks in the [.csproj](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/RunSpecflowTests/RunSpecflowTests.csproj)
 ```xml
-<TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
+<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 ```
 * [dotnet.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnet.yml)
 * [dotnetcore.yml](https://github.com/cryptic-wizard/run-specflow-tests/blob/main/.github/workflows/dotnetcore.yml)
 
 #### Optional parameters:
 ```yaml
-- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.1
+- uses: actions/cryptic-wizard/run-specflow-tests@v1.3.3
   with:
-    test-assembly-path: MySpecflowProject/bin/Debug/netcoreapp3.1
+    test-assembly-path: MySpecflowProject/bin/Debug/net7.0
     test-assembly-dll: MySpecflowProject.dll
     test-execution-json: TestExecution.json
     configuration: Debug
     output-html: MyTestResults.html
     build-verbosity: normal
     test-verbosity: minimal
-    framework: netcoreapp3.1
+    filter: TestCategory=CategoryA
+    framework: net7.0
     no-build: true
     logger: trx
     logger-file-name: ../../MyTestResults.trx
@@ -83,6 +84,11 @@ jobs:
 
 ## Features
 #### Recently Added
+* v1.3.3 - Add filter option
+```yaml
+filter:
+```
+* v1.3.2 - Patch for Github action exit code change - thanks again to awgeorge
 * v1.3.1 - test-execution-json now has default value
 ```yaml
 test-execution-json: 'TestExecution.json' by default

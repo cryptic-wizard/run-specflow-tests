@@ -7,22 +7,26 @@ branding:
 
 inputs:
   test-assembly-path:
-    description: "Path of the working directory for build assemblies (example: MySpecflowProject/bin/Debug/netcoreapp3.1)"
+    description: "Path of the working directory for build assemblies (example: MySpecflowProject/bin/Debug/net7.0)"
     required: false
     default: 'null'
   test-assembly-dll:
-    description: "Relative path of <MySpecflowProject.dll> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/MySpecflowProject.dll or MySpecflowProject.dll if using test-assembly-path)"
+    description: "Relative path of <MySpecflowProject.dll> (example: MySpecflowProject/bin/Debug/net7.0/MySpecflowProject.dll or MySpecflowProject.dll if using test-assembly-path)"
     required: true
   test-execution-json:
-    description: "Relative path of <MySpecflowProjectTestExecution(s).json> (example: MySpecflowProject/bin/Debug/netcoreapp3.1/TestExecution.json or TestExecution.json if using test-assembly-path)"
+    description: "Relative path of <MySpecflowProjectTestExecution(s).json> (example: MySpecflowProject/bin/Debug/net7.0/TestExecution.json or TestExecution.json if using test-assembly-path)"
     required: false
     default: 'TestExecution.json'
   output-html:
     description: "Name of Specflow LivingDoc output file (must end with .html) (example: MyTestResults.html)"
     required: false
     default: 'LivingDoc.html'
+  filter:
+    description: "Run tests that match the given description (example: TestCategory=CategoryA or FullyQualifiedName~Calculator)"
+    required: false
+    default: 'null'
   framework:
-    description: "Framework version of dotnet (example: netcoreapp3.1, net5.0)"
+    description: "Framework version of dotnet (example: net6.0, net7.0)"
     required: false
     default: 'null'
   configuration:
@@ -71,6 +75,7 @@ runs:
         _logger_args=()
         [ "${{ inputs.configuration }}" != 'null' ] && _args+=("-c" "${{ inputs.configuration }}")
         [ "${{ inputs.build-verbosity }}" != 'null' ] && _args+=("-v" "${{ inputs.build-verbosity }}")
+        [ "${{ inputs.filter }}" != 'null' ] && _args+=("--filter" "${{ inputs.filter }}")
         [ "${{ inputs.framework }}" != 'null' ] && _args+=("-f" "${{ inputs.framework }}")
         [ "${{ inputs.test-verbosity }}" != 'null' ] && _logger_args+=(";verbosity=${{ inputs.test-verbosity }}")
         [ "${{ inputs.logger-file-name }}" != 'null' ] && _logger_args+=(";LogFileName=${{ inputs.logger-file-name }}")

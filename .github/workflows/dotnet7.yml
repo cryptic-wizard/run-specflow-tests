@@ -1,4 +1,4 @@
-name: .NET Core 3.1
+name: .NET 7.0
 on:
   push:
 
@@ -13,13 +13,14 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 7.0.x
     - uses:  ./
       with:
-        test-assembly-dll: RunSpecflowTests/bin/Debug/netcoreapp3.1/RunSpecflowTests.dll
-        test-execution-json: RunSpecflowTests/bin/Debug/netcoreapp3.1/TestExecution.json
+        test-assembly-dll: RunSpecflowTests/bin/Debug/net7.0/RunSpecflowTests.dll
+        test-execution-json: RunSpecflowTests/bin/Debug/net7.0/TestExecution.json
         output-html: CalculatorResults.html
-        framework: netcoreapp3.1
+        filter: 'FullyQualifiedName~Calculator'
+        framework: net7.0
         configuration: 'Debug'
         logger: trx
         logger-file-name: ../../CalculatorResults.trx

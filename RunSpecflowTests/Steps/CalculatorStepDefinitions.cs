@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using NUnit.Framework.Legacy;
 using TechTalk.SpecFlow;
 
 namespace RunSpecflowSteps.Steps
@@ -32,8 +32,8 @@ namespace RunSpecflowSteps.Steps
         {
             int firstNumber = _scenarioContext.Get<int>("firstNumber");
             int secondNumber = _scenarioContext.Get<int>("secondNumber");
-            Assert.IsNotNull(firstNumber);
-            Assert.IsNotNull(secondNumber);
+            ClassicAssert.IsNotNull(firstNumber);
+            ClassicAssert.IsNotNull(secondNumber);
 
             int resultNumber = firstNumber + secondNumber;
             _scenarioContext.Add("resultNumber", resultNumber);
@@ -44,8 +44,8 @@ namespace RunSpecflowSteps.Steps
         {
             int firstNumber = _scenarioContext.Get<int>("firstNumber");
             int secondNumber = _scenarioContext.Get<int>("secondNumber");
-            Assert.IsNotNull(firstNumber);
-            Assert.IsNotNull(secondNumber);
+            ClassicAssert.IsNotNull(firstNumber);
+            ClassicAssert.IsNotNull(secondNumber);
 
             int resultNumber = firstNumber - secondNumber;
             _scenarioContext.Add("resultNumber", resultNumber);
@@ -56,9 +56,8 @@ namespace RunSpecflowSteps.Steps
         public void ThenTheResultShouldBe(int result)
         {
             int resultNumber = _scenarioContext.Get<int>("resultNumber");
-            Assert.IsNotNull(resultNumber);
-
-            Assert.AreEqual(result, resultNumber);
+            ClassicAssert.IsNotNull(resultNumber);
+            ClassicAssert.AreEqual(result, resultNumber);
         }
     }
 }

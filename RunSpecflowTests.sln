@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		action.yml = action.yml
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
-		.github\workflows\dotnetnoartifacts.yml = .github\workflows\dotnetnoartifacts.yml
+		.github\workflows\dotnet6.yml = .github\workflows\dotnet6.yml
+		.github\workflows\dotnet7.yml = .github\workflows\dotnet7.yml
+		.github\workflows\dotnet6noartifacts.yml = .github\workflows\dotnet6noartifacts.yml
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
